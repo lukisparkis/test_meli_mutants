@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  go:
+    restart: always
+    container_name: meli-test
+    build:
+      context: ./
+      target: dev
+      dockerfile: ./build/docker/dev/go/Dockerfile
+    volumes:
+      - ./:/go/src/gitlab.com/meli
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+
+networks:
+  default:
+    external:
+      name: docker_default

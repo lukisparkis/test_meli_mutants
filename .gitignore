@@ -1,0 +1,6 @@
+tmp
+coverage.txt
+coverage.func.txt
+coverage.html
+cmd/api/*.pem
+.idea

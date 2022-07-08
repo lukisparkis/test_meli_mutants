@@ -1,0 +1,84 @@
+basePath: /
+definitions:
+  models.Stat:
+    properties:
+      count_human_dna:
+        type: integer
+      count_mutant_dna:
+        type: integer
+      ratio:
+        type: number
+    type: object
+  validators.DnaValidator:
+    properties:
+      dna:
+        items:
+          type: string
+        type: array
+    type: object
+info:
+  contact:
+    email: gerzonbautista@gmail.com
+    name: Gerzon Bautista Gonzalez
+  description: This is the main to microservice.
+  title: MeLi Test
+  version: "1.0"
+paths:
+  /mutants:
+    post:
+      consumes:
+      - application/json
+      description: Check a given dna.
+      operationId: CheckMutant
+      parameters:
+      - description: Check a dna
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/validators.DnaValidator'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Message successfully!
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Check if a dna is from a mutant.
+      tags:
+      - Mutants
+  /stats:
+    get:
+      consumes:
+      - application/json
+      description: Get all stats previous DNA checks
+      operationId: GetAllChecksPrevious
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Return stats
+          schema:
+            $ref: '#/definitions/models.Stat'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all checks previous
+      tags:
+      - stats
+swagger: "2.0"

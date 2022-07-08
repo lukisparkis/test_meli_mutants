@@ -1,0 +1,128 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the main to microservice.",
+        "title": "MeLi Test",
+        "contact": {
+            "name": "Gerzon Bautista Gonzalez",
+            "email": "gerzonbautista@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/mutants": {
+            "post": {
+                "description": "Check a given dna.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mutants"
+                ],
+                "summary": "Check if a dna is from a mutant.",
+                "operationId": "CheckMutant",
+                "parameters": [
+                    {
+                        "description": "Check a dna",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/validators.DnaValidator"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message successfully!",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/stats": {
+            "get": {
+                "description": "Get all stats previous DNA checks",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "stats"
+                ],
+                "summary": "Get all checks previous",
+                "operationId": "GetAllChecksPrevious",
+                "responses": {
+                    "200": {
+                        "description": "Return stats",
+                        "schema": {
+                            "$ref": "#/definitions/models.Stat"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Stat": {
+            "type": "object",
+            "properties": {
+                "count_human_dna": {
+                    "type": "integer"
+                },
+                "count_mutant_dna": {
+                    "type": "integer"
+                },
+                "ratio": {
+                    "type": "number"
+                }
+            }
+        },
+        "validators.DnaValidator": {
+            "type": "object",
+            "properties": {
+                "dna": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
